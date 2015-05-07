@@ -16,8 +16,8 @@ describe('Testing ', function(){
   describe('Sync behavior', function(){
     it('should berages be deeply equal', function(){
 		expect(beverages_a).to.be.deep.equal(beverages_b);
-    })
-  })
+    });
+  });
   
   describe('Async behavior', function(){
     it('should berages be deeply equal after timeout using done', function(done){
@@ -25,13 +25,13 @@ describe('Testing ', function(){
 			expect(beverages_a).to.be.deep.equal(beverages_b);
 			done();
 		},120);
-    })
+    });
 	
 	it('should berages be deeply equal using promises', function(){
 		//expect(BluePromise.resolve({ foo: "bar" })).to.eventually.have.property("foo");
 		expect(BluePromise.resolve(beverages_a)).to.be.eventually.deep.equal(beverages_b);
-    })
-  })
+    });
+  });
 });
 
 after(function(){
