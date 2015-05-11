@@ -28,6 +28,13 @@ module.exports = function(grunt) {
             config: ['Gruntfile.js'],
             src: ['src/**/*.js'],
             test: ['test/**/*.js']
+        },
+        mochaTest: {
+            options: {
+                reporter: 'spec',
+                quiet: false
+            },
+            src: ['test/**/*.js']
         }
     });
 
@@ -41,14 +48,17 @@ module.exports = function(grunt) {
     grunt.registerTask('help_task', 'print help options', function() {
         grunt.log.writeln(" Grunt commands:");
         grunt.log.writeln(" * help : Print this options");
-        grunt.log.writeln(" * compile : Run tests and then build dev on tmp folder");
+        grunt.log.writeln(" * compile : Run JSHint and unit test to ensure sanity.");
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-mocha-test');
 
     // Default task(s).
     grunt.registerTask('default', ['help']);
     grunt.registerTask('help', ['project_banner_task', 'help_task']);
 
-    grunt.registerTask('compile', ['jshint']);
+    grunt.registerTask('test', ['mochaTest']);
+
+    grunt.registerTask('compile', ['jshint', 'test']);
 };

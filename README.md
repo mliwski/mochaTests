@@ -15,7 +15,7 @@
 # Siguientes pasos
 <strike>1. Gruntjs</strike>
 <strike>1. JSHint</strike>
-1. Ejecutar mocha desde Gruntjs
+<strike>1. Ejecutar mocha desde Gruntjs</strike>
 1. Incluir modulos propios
 1. Mocks (sinon?)
 1. Mock de dependencia de modulos (rewire?/spy?)
