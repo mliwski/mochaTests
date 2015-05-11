@@ -15,22 +15,27 @@ before(function(){
 describe('Testing ', function(){
   describe('Sync behavior', function(){
     it('should berages be deeply equal', function(){
-		expect(beverages_a).to.be.deep.equal(beverages_b);
+		return expect(beverages_a).to.be.deep.equal(beverages_b);
     });
   });
   
   describe('Async behavior', function(){
-    it('should berages be deeply equal after timeout using done', function(done){
+    it('should beverages be deeply equal after timeout using done', function(done){
 		setTimeout(function(){
 			expect(beverages_a).to.be.deep.equal(beverages_b);
 			done();
 		},120);
     });
 	
-	it('should berages be deeply equal using promises', function(){
+	it('should resolve beverages be deeply equal using promises', function(){
 		//expect(BluePromise.resolve({ foo: "bar" })).to.eventually.have.property("foo");
-		expect(BluePromise.resolve(beverages_a)).to.be.eventually.deep.equal(beverages_b);
+		return expect(BluePromise.resolve(beverages_a)).to.be.eventually.deep.equal(beverages_b);
     });
+
+      it('should reject beverages be deeply equal using promises', function(){
+          //expect(BluePromise.resolve({ foo: "bar" })).to.eventually.have.property("foo");
+          return expect(BluePromise.reject(new Error("TEst reject"))).to.be.rejected;
+      });
   });
 });
 
