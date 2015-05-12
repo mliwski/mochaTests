@@ -4,6 +4,11 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
+        env: {
+            coverage: {
+                APP_DIR_FOR_CODE_COVERAGE: '../test/coverage/instrument/src/'
+            }
+        },
         jshint: {
             options: {
                 /* Enforcing options */
@@ -29,12 +34,32 @@ module.exports = function(grunt) {
             src: ['src/**/*.js'],
             test: ['test/**/*.js']
         },
+        instrument: {
+            files: 'src/**/*.js',
+            options: {
+                lazy: true,
+                basePath: 'test/coverage/instrument/'
+            }
+        },
         mochaTest: {
             options: {
                 reporter: 'spec',
                 quiet: false
             },
             src: ['test/**/*.js']
+        },
+        storeCoverage: {
+            options: {
+                dir: 'test/coverage/reports'
+            }
+        },
+        makeReport: {
+            src: 'test/coverage/reports/**/*.json',
+            options: {
+                type: 'lcov',
+                dir: 'test/coverage/reports',
+                print: 'detail'
+            }
         }
     });
 
@@ -53,6 +78,8 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('grunt-istanbul');
+    grunt.loadNpmTasks('grunt-env');
 
     // Default task(s).
     grunt.registerTask('default', ['help']);
@@ -61,4 +88,5 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['mochaTest']);
 
     grunt.registerTask('compile', ['jshint', 'test']);
+    grunt.registerTask('coverage', ['env:coverage', 'instrument', 'test', 'storeCoverage', 'makeReport']);
 };
