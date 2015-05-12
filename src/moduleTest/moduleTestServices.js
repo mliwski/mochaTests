@@ -2,30 +2,26 @@
 
 var BluePromise = require('bluebird');
 
-var add = function(object) {
-    var randomId = Math.random() * (1000 - 50) + 50;
+var moduleTestCollection = require('./moduleTestCollection');
 
-    if(randomId >= 500 && randomId <600){
-        return BluePromise.reject(new Error('random en 600'));
-    } else {
-        return BluePromise.resolve({id:randomId});
-    }
+var add = function(object) {
+    return moduleTestCollection.add(object);
 }
 
 var list = function(){
-
+    return moduleTestCollection.list();
 }
 
 var get = function(id) {
-
+    return moduleTestCollection.get(id);
 }
 
 var update = function(id, object) {
-
+    return moduleTestCollection.update(id, object);
 }
 
 var remove = function(id) {
-
+    return moduleTestCollection.remove(id);
 }
 
 module.exports = {
