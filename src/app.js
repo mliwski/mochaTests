@@ -1,5 +1,5 @@
-var express = require('express')
-var bodyParser = require('body-parser')
+var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 
 var testRoutes = require('./moduleTest/moduleTestRoutes');
@@ -22,6 +22,7 @@ app.use('/tests', testRoutes);
 
 
 //TODO: The error treatment could by first application treatment then default treatment in separated middleware
+/*jshint unused: vars*/
 //Error handler
 app.use(function(error, req, res, next) {
     if(error.stack){

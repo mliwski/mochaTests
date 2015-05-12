@@ -4,7 +4,7 @@ var loki = require('lokijs');
 var _ = require('underscore');
 
 var db = new loki('loki.json');
-var testCollection = db.addCollection('test')
+var testCollection = db.addCollection('test');
 
 var errors = require('../commons/errors');
 
@@ -18,7 +18,7 @@ var add = function(object) {
     } catch (error){
         return BluePromise.reject(error);
     }
-}
+};
 
 var list = function(){
     try{
@@ -31,7 +31,7 @@ var list = function(){
         console.log(JSON.stringify(error));
         return BluePromise.reject(error);
     }
-}
+};
 
 var get = function(id) {
     try{
@@ -41,13 +41,13 @@ var get = function(id) {
     } catch (error){
         return BluePromise.reject(error);
     }
-}
+};
 
 var update = function(id, updateObject) {
     try{
         var foundObject = testCollection.get(id);
-        if(isValidObject(foundObject) == false) {
-            throw new errors.NotFoundError("Can't update object with id : " + id + ", object not found");
+        if(isValidObject(foundObject) === false) {
+            return BluePromise.reject(new errors.NotFoundError("Can't update object with id : " + id + ", object not found"));
         }
 
         var updatedObject = firstLevelPropertiesUpdate(updateObject, foundObject);
@@ -55,10 +55,9 @@ var update = function(id, updateObject) {
         var adaptedResponse = adaptResponseToStandardFields(updatedObject);
         return BluePromise.resolve(adaptedResponse);
     } catch (error){
-        console.log(JSON.stringify(error));
         return BluePromise.reject(error);
     }
-}
+};
 function firstLevelPropertiesUpdate(object, foundObject) {
     _.keys(object).forEach(function (key) {
         foundObject[key] = object[key];
@@ -69,8 +68,8 @@ function firstLevelPropertiesUpdate(object, foundObject) {
 var remove = function(id) {
     try{
         var foundObject = testCollection.get(id);
-        if(isValidObject(foundObject) == false) {
-            throw new errors.NotFoundError("Can't remove object with id : " + id + ", object not found");
+        if(isValidObject(foundObject) === false) {
+            return BluePromise.reject(new errors.NotFoundError("Can't remove object with id : " + id + ", object not found"));
         }
 
         var removedObject = testCollection.remove(foundObject);
@@ -78,7 +77,7 @@ var remove = function(id) {
     } catch (error){
         return BluePromise.reject(error);
     }
-}
+};
 
 function adaptResponseToStandardFields(object) {
     if(isValidObject(object)) {
@@ -97,7 +96,7 @@ function adaptResponseToStandardFields(object) {
     }
 }
 function isValidObject(object) {
-    return _.isNull(object) == false && _.isUndefined(object) == false && _.isEmpty(object) == false;
+    return _.isNull(object) === false && _.isUndefined(object) === false && _.isEmpty(object) === false;
 }
 
 module.exports = {
