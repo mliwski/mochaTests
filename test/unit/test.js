@@ -11,7 +11,8 @@ var beverages_a = { tea: [ 'chai', 'matcha', 'oolong' ] };
 var beverages_b = { tea: [ 'chai', 'matcha', 'oolong' ] };
 
 before(function(){
-	console.log('Inicio de los test (o por ejemplo levantar la conexion a la db)');
+    console.log('');
+    console.log('Inicio de los test (o por ejemplo levantar la conexion a la db)');
 });
 
 describe('Testing ', function(){
@@ -36,11 +37,12 @@ describe('Testing ', function(){
 
       it('should reject beverages be deeply equal using promises', function(){
           //expect(BluePromise.resolve({ foo: "bar" })).to.eventually.have.property("foo");
-          return expect(BluePromise.reject(new Error("TEst reject"))).to.be.rejected;
+          return expect(BluePromise.reject(new Error("Test reject"))).to.be.rejected;
       });
   });
 });
 
 after(function(){
-	console.log('Cierre de los test (o por ejemplo borrar los ejemplos de db y cerrar la conexion)');
+    console.log('');
+    console.log('Cierre de los test (o por ejemplo borrar los ejemplos de db y cerrar la conexion)');
 });

@@ -35,8 +35,29 @@ module.exports = function(grunt) {
                 quiet: false
             },
             src: ['test/**/*.js']
+        },
+        mocha_istanbul: {
+            coverage: {
+                src: 'src', // a folder works nicely
+                options: {
+                    mask: '*.js',
+                    reporter: 'progress',
+                    dryRun: false,
+                    reportFormats:['html']
+                }
+            }
         }
     });
+
+    grunt.event.on('coverage', function(lcovFileContents, done){
+        // Check below on the section "The coverage event"
+        done();
+    });
+
+    grunt.loadNpmTasks('grunt-mocha-istanbul');
+
+    grunt.registerTask('coveralls', ['mocha_istanbul:coveralls']);
+    grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
 
     grunt.registerTask('project_banner_task', 'Print project banner', function() {
         grunt.log.writeln("");
