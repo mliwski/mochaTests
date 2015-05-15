@@ -13,10 +13,10 @@
 *
 
 # Siguientes pasos
-<strike>1. Gruntjs</strike>
-<strike>1. JSHint</strike>
-<strike>1. Ejecutar mocha desde Gruntjs</strike>
-1. Promisificar
+1. <strike>Gruntjs</strike>
+1. <strike>JSHint</strike>
+1. <strike>Ejecutar mocha desde Gruntjs</strike>
+1. <strike>Promisificar</strike>
 1. Incluir modulos propios
 1. Agregar bump para versionado SEM
 1. Agregar reload para desarrollo y tener dos modos dev y prod en grunt

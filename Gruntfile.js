@@ -56,8 +56,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-mocha-istanbul');
 
-    grunt.registerTask('coveralls', ['mocha_istanbul:coveralls']);
-    grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
+
 
     grunt.registerTask('project_banner_task', 'Print project banner', function() {
         grunt.log.writeln("");
@@ -69,7 +68,9 @@ module.exports = function(grunt) {
     grunt.registerTask('help_task', 'print help options', function() {
         grunt.log.writeln(" Grunt commands:");
         grunt.log.writeln(" * help : Print this options");
-        grunt.log.writeln(" * compile : Run JSHint and unit test to ensure sanity.");
+        grunt.log.writeln(" * compile : Run JSHint, unit test and coverage to ensure sanity.");
+        grunt.log.writeln(" * test : Run code tests.");
+        grunt.log.writeln(" * coverage : Run code coverage.");
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -80,6 +81,7 @@ module.exports = function(grunt) {
     grunt.registerTask('help', ['project_banner_task', 'help_task']);
 
     grunt.registerTask('test', ['mochaTest']);
+    grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
 
-    grunt.registerTask('compile', ['jshint', 'test']);
+    grunt.registerTask('compile', ['jshint', 'test', 'coverage']);
 };
