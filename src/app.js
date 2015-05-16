@@ -8,17 +8,20 @@ var errors = require('./commons/errors');
 
 // parse application/json
 app.use(bodyParser.json());
-/*
 
-
+//Custom middelware to accept only application/json content types
 app.use(function(req, res, next) {
-    if (req.headers['content-type'] !== 'application/json')
-        return res.send(400);
-    next();
+    if (req.headers['content-type'] !== 'application/json') {
+		res.status(406);
+		res.setHeader('Error', 'Only accept application/json content types');
+		res.end();
+	} else {
+		next();
+	}
 });
-*/
 
 app.use('/tests', testRoutes);
+
 
 
 //TODO: The error treatment could by first application treatment then default treatment in separated middleware

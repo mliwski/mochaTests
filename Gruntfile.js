@@ -46,17 +46,29 @@ module.exports = function(grunt) {
                     reportFormats:['html']
                 }
             }
-        }
+        },
+		watch: {
+			js: {
+				files: [
+					'src/**/*.js',
+					'test/**/*.js',
+					'Gruntfile.js'
+				],
+				tasks: ['dev'],
+				options: { nospawn: true }
+			}
+		},
+		develop: {
+			server: {
+				file: 'src/app.js'
+			}
+		}
     });
 
     grunt.event.on('coverage', function(lcovFileContents, done){
         // Check below on the section "The coverage event"
         done();
     });
-
-    grunt.loadNpmTasks('grunt-mocha-istanbul');
-
-
 
     grunt.registerTask('project_banner_task', 'Print project banner', function() {
         grunt.log.writeln("");
@@ -75,6 +87,9 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-mocha-test');
+	grunt.loadNpmTasks('grunt-mocha-istanbul');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-develop');
 
     // Default task(s).
     grunt.registerTask('default', ['help']);
@@ -84,4 +99,6 @@ module.exports = function(grunt) {
     grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
 
     grunt.registerTask('compile', ['jshint', 'test', 'coverage']);
+	
+	grunt.registerTask('dev', ['project_banner_task', 'compile', 'develop', 'watch']);
 };
