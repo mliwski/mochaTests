@@ -100,5 +100,5 @@ module.exports = function(grunt) {
 
     grunt.registerTask('compile', ['jshint', 'test', 'coverage']);
 	
-	grunt.registerTask('dev', ['project_banner_task', 'compile', 'develop', 'watch']);
+	grunt.registerTask('dev', ['project_banner_task', 'jshint', 'coverage','develop', 'watch']);
 };
