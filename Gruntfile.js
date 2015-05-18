@@ -48,19 +48,33 @@ module.exports = function(grunt) {
             },
             src: ['test/**/*.js']
         },
-        storeCoverage: {
-            options: {
-                dir: 'test/coverage/reports'
+        mocha_istanbul: {
+            coverage: {
+                src: 'src', // a folder works nicely
+                options: {
+                    mask: '*.js',
+                    reporter: 'progress',
+                    dryRun: false,
+                    reportFormats:['html']
+                }
             }
         },
-        makeReport: {
-            src: 'test/coverage/reports/**/*.json',
-            options: {
-                type: 'lcov',
-                dir: 'test/coverage/reports',
-                print: 'detail'
-            }
-        }
+		watch: {
+			js: {
+				files: [
+					'src/**/*.js',
+					'test/**/*.js',
+					'Gruntfile.js'
+				],
+				tasks: ['dev'],
+				options: { nospawn: true }
+			}
+		},
+		develop: {
+			server: {
+				file: 'src/app.js'
+			}
+		}
     });
 
     grunt.registerTask('project_banner_task', 'Print project banner', function() {
@@ -73,20 +87,25 @@ module.exports = function(grunt) {
     grunt.registerTask('help_task', 'print help options', function() {
         grunt.log.writeln(" Grunt commands:");
         grunt.log.writeln(" * help : Print this options");
-        grunt.log.writeln(" * compile : Run JSHint and unit test to ensure sanity.");
+        grunt.log.writeln(" * compile : Run JSHint, unit test and coverage to ensure sanity.");
+        grunt.log.writeln(" * test : Run code tests.");
+        grunt.log.writeln(" * dev : Run the server in dev mode (watch files, if changed run coverage and restart server).");
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-istanbul');
-    grunt.loadNpmTasks('grunt-env');
+	grunt.loadNpmTasks('grunt-mocha-istanbul');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-develop');
 
     // Default task(s).
     grunt.registerTask('default', ['help']);
     grunt.registerTask('help', ['project_banner_task', 'help_task']);
 
     grunt.registerTask('test', ['mochaTest']);
+    grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
 
-    grunt.registerTask('compile', ['jshint', 'test']);
-    grunt.registerTask('coverage', ['env:coverage', 'instrument', 'test', 'storeCoverage', 'makeReport']);
+    grunt.registerTask('compile', ['jshint', 'test', 'coverage']);
+	
+	grunt.registerTask('dev', ['project_banner_task', 'jshint', 'coverage','develop', 'watch']);
 };

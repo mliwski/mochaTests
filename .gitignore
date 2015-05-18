@@ -1,3 +1,4 @@
 node_modules/
 .idea/
-test/coverage/
+coverage/src
+npm-debug.log
