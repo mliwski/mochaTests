@@ -74,7 +74,12 @@ module.exports = function(grunt) {
 			server: {
 				file: 'src/app.js'
 			}
-		}
+		},
+        execute: {
+            stress: {
+                src: ['test/stress/stressTests.js']
+            }
+        }
     });
 
     grunt.registerTask('project_banner_task', 'Print project banner', function() {
@@ -97,6 +102,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-mocha-istanbul');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-develop');
+    grunt.loadNpmTasks('grunt-execute');
 
     // Default task(s).
     grunt.registerTask('default', ['help']);
@@ -105,7 +111,9 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['mochaTest']);
     grunt.registerTask('coverage', ['mocha_istanbul:coverage']);
 
+    grunt.registerTask('stress', ['project_banner_task', 'develop', 'execute:stress']);
+
     grunt.registerTask('compile', ['jshint', 'test', 'coverage']);
-	
+
 	grunt.registerTask('dev', ['project_banner_task', 'jshint', 'coverage','develop', 'watch']);
 };
